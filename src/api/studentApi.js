@@ -18,6 +18,7 @@ export const checkScoreBySbd = (sbd) => {
  * @param {string} group
  */
 export const getTopStudentsByGroup = (group) => {
+  console.log('Fetching top students for group:', group);
   return axiosClient.get('/students/top', {
     params: { group },
   });

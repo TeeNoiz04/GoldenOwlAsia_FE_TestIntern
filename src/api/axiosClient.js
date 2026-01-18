@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'http://localhost:8000/api',
+  baseURL: 'https://goldenowlasiabetestintern-production.up.railway.app/api',
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
-  timeout: 10000, // 10s
+  timeout: 30000, // 30s - tăng từ 10s
 });
 
 // Response interceptor (chuẩn, rất ghi điểm)

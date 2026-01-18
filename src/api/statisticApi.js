@@ -1,11 +1,19 @@
-import axiosClient from './axiosClient';
+import axiosClient from "./axiosClient";
 
 /**
- * Lấy thống kê theo môn học (chart)
+ * Lấy thống kê theo môn học (bar chart)
  * GET /statistics/subjects
  */
-export const getSubjectStatistics = () => {
-  return axiosClient.get('/statistics/subjects');
+export const getSubjectStatisticsBar = () => {
+  return axiosClient.get("/statistics/subject-statistics-bar");
+};
+
+/**
+ * Lấy thống kê theo môn học (line chart)
+ * GET /statistics/subjects
+ */
+export const getSubjectStatisticsLine = () => {
+  return axiosClient.get("/statistics/subject-statistics-line");
 };
 
 /**
@@ -13,5 +21,5 @@ export const getSubjectStatistics = () => {
  * GET /statistics/student-summary
  */
 export const getStudentSummary = () => {
-  return axiosClient.get('/statistics/student-summary');
+  return axiosClient.get("/statistics/student-summary");
 };
