@@ -137,10 +137,9 @@ const SubjectStatisticsBarChart = () => {
           {Object.keys(COLORS).map((key) => (
             <Bar
               key={key}
-              dataKey={key}
+              dataKey={key}         
               fill={COLORS[key]}
               stackId={viewMode === "stacked" ? "stack" : undefined}
-              radius={[8, 8, 0, 0]}
               name={key.charAt(0).toUpperCase() + key.slice(1)}
             />
           ))}

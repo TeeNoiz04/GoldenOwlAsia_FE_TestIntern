@@ -1,72 +1,82 @@
-import { useState } from 'react';
-import ScoreSearchBox from '@/features/students/ScoreSearchBox';
-import StudentInfoCard from '@/features/students/StudentInfoCard';
-import GroupScores from '@/features/students/GroupScores';
-import SubjectScores from '@/features/students/SubjectScores';
-import { studentService } from '@/features/students/studentService';
+import { useState } from "react";
+import ScoreSearchBox from "@/features/students/ScoreSearchBox";
+import StudentInfoCard from "@/features/students/StudentInfoCard";
+import GroupScores from "@/features/students/GroupScores";
+import SubjectScores from "@/features/students/SubjectScores";
+import { studentService } from "@/features/students/studentService";
 
 const ScoreLookup = () => {
-  const [sbd, setSbd] = useState('');
+  const [sbd, setSbd] = useState("");
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [showError, setShowError] = useState(false);
 
   // Get color for score
   const getColor = (score) => {
-    if (!score) return 'text-gray-400';
-    if (score >= 8) return 'text-green-600';
-    if (score >= 6.5) return 'text-blue-600';
-    if (score >= 5) return 'text-orange-600';
-    return 'text-red-600';
+    if (!score) return "text-gray-400";
+    if (score >= 8) return "text-green-600";
+    if (score >= 6.5) return "text-blue-600";
+    if (score >= 5) return "text-orange-600";
+    return "text-red-600";
   };
 
   // Get badge styling
   const getBadge = (score) => {
-    if (!score) return 'bg-gray-100 text-gray-600';
-    if (score >= 8) return 'bg-green-100 text-green-700';
-    if (score >= 6.5) return 'bg-blue-100 text-blue-700';
-    if (score >= 5) return 'bg-orange-100 text-orange-700';
-    return 'bg-red-100 text-red-700';
+    if (!score) return "bg-gray-100 text-gray-600";
+    if (score >= 8) return "bg-green-100 text-green-700";
+    if (score >= 6.5) return "bg-blue-100 text-blue-700";
+    if (score >= 5) return "bg-orange-100 text-orange-700";
+    return "bg-red-100 text-red-700";
   };
 
   // Get label
   const getLabel = (score) => {
-    if (!score) return 'N/A';
-    if (score >= 8) return 'Excellent';
-    if (score >= 6.5) return 'Good';
-    if (score >= 5) return 'Average';
-    return 'Poor';
+    if (!score) return "N/A";
+    if (score >= 8) return "Excellent";
+    if (score >= 6.5) return "Good";
+    if (score >= 5) return "Average";
+    return "Poor";
   };
 
   // Handle search
   const handleSearch = async () => {
     if (!sbd.trim()) {
-      setError('Please enter registration number');
+      setError("Please enter registration number");
       setShowError(true);
       return;
     }
     setLoading(true);
-    setError('');
+    setError("");
     setShowError(false);
 
     try {
       const data = await studentService.checkStudentScore(sbd);
-      console.log('Student score data:', data);
+      console.log("Student score data:", data);
 
       // Handle API response structure
       const studentData = data?.data || data;
-      
+
       if (studentData) {
         setStudent(studentData);
       } else {
-        setError('No data received from server');
+        setError("No data received from server");
         setShowError(true);
         setStudent(null);
       }
     } catch (err) {
-      console.error('Search error:', err);
-      setError(err.message || 'Failed to fetch student score');
+      console.error("Search error:", err);
+      
+      // Check error status and set appropriate message
+      if (err.response?.status === 404) {
+        setError("Student not found");
+      } else if (err.response?.status === 422) {
+        setError("Invalid input data");
+      } else if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError(err.message || "System error. Please try again later.");
+      }
       setShowError(true);
       setStudent(null);
     } finally {
@@ -76,7 +86,7 @@ const ScoreLookup = () => {
 
   // Handle key press
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSearch();
     }
   };
