@@ -10,7 +10,7 @@ export default function Sidebar({ open, navItems }) {
           <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
             <BookOpen className="text-white" size={20} />
           </div>
-          <h1 className="text-xl font-bold">Golden Owl</h1>
+          <h1 className="text-xl font-bold">TGL Solutions</h1>
         </div>
 
         <nav className="space-y-2">
