@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'https://goldenowlasiabetestintern-production.up.railway.app/api',
+  baseURL: 'https://be-uniscore-2022-production.up.railway.app/api',
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
